@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="reset.css">
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+        rel="stylesheet">
+
+    <title>GithubSearch</title>
+</head>
+
+<body>
+    <div class="container-externo">
+        <div class="container">
+            <img class="logo-github" src="img/logo-github.svg" alt="logo-github">
+            <div class="input-com-icone">
+                <input type="text" id="inputGithub" placeholder="Digite um usuário do Github" />
+                <button class="icone-lupa" id="botaoPesquisar" type="button">
+                    <img src="img/icone-lupa.svg" alt="Buscar" />
+                </button>
+            </div>
+
+            <div  id="perfil-container" class="perfil-container ocultar">
+                <img id="perfil-img" src="" alt="img-perfil">
+                <div class="perfil-info">
+                    <h2 id="perfil-nome" class="perfil-nome"></h2>
+                    <p id="perfil-bio" class="perfil-bio">
+                    </p>
+                </div>
+            </div>
+
+            <div class="perfil-container ocultar">
+                <img src="img/relampago-mcqueen_capa.jpg" alt="img-perfil-avatar">
+                <div class="perfil-info">
+                    <h2 class="perfil-nome">Lucas Mendes</h2>
+                    <p class="perfil-bio">
+                        Desenvolvedor front-end apaixonado por criar interfaces intuitivas e acessíveis. Especialista em
+                        UX/UI e
+                        e-commerces, transformando design em código eficiente. Sempre explorando novas tecnologias para
+                        melhorar
+                        a experiência do usuário. 🚀
+                    </p>
+                </div>
+            </div>
+
+            <div id="perfil-nao-encontrado" class="perfil-nao-encontrado ocultar">
+                <h3>Nenhum perfil foi encontrado com ese nome de usuário.</h3>
+                <h3>Tente novamente</h3>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
+
+    <script>
+
+        const botaoPesquisar = document.getElementById("botaoPesquisar");
+        const input = document.getElementById("inputGithub");
+
+        botaoPesquisar.addEventListener("click", () => {
+            const text = input.value;
+            if (text) {
+                console.log(text)
+                buscarUsuario(text);
+            }
+        })
+
+        async function buscarUsuario(text) {
+            try {
+                const resposta = await fetch(`https://api.github.com/users/${text}`)
+                if (!resposta.ok) {
+                    if(resposta.status === 404){
+                        //MANIPULAR PRA MOSTRAR NAO ENCONTRADO
+                        console.log("NOT FOUND")
+                        const notFound = document.getElementById("perfil-nao-encontrado");
+                        notFound.classList.remove("ocultar");
+                        const perfil_container = document.getElementById("perfil-container");
+                        perfil_container.classList.add("ocultar");
+                    }
+                    throw new Error(`Erro na requisição: ${resposta.status}`)
+                }
+                const usuario = await resposta.json();
+                mostrarUsuario(usuario);
+            } catch (erro) {
+                console.log("Erro na busca: ", erro.message);
+                return erro;
+            }
+        }
+
+        function mostrarUsuario(usuario) {
+            const notFound = document.getElementById("perfil-nao-encontrado");
+            notFound.classList.add("ocultar");
+
+            const img_url = usuario.avatar_url;
+            console.log(img_url)
+
+            const nome = usuario.name;
+            console.log(nome)
+
+            const bio = usuario.bio;
+            console.log(bio)
+
+            const perfil_container = document.getElementById("perfil-container");
+            const img_perfil = document.getElementById("perfil-img");
+            const nome_perfil = document.getElementById("perfil-nome");
+            const bio_perfil = document.getElementById("perfil-bio");
+
+            perfil_container.classList.remove("ocultar");
+
+            img_perfil.src = img_url;
+            nome_perfil.innerText = nome;
+            bio_perfil.innerText = bio;
+
+
+            /*
+            <div  id="perfil-container" class="perfil-container ocultar">
+                <img id="perfil-img" src="" alt="img-perfil">
+                <div class="perfil-info">
+                    <h2 id="perfil-nome" class="perfil-nome"></h2>
+                    <p id="perfil-bio" class="perfil-bio">
+                    </p>
+                </div>
+            </div>
+            */
+        }
+
+
+    </script>
+</body>
+
+</html>
