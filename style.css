@@ -6,23 +6,46 @@
     --cor-primaria: #000000;
     --cor-container-perfil: #d9d9d9;
     --cor-nao-encontrado: #FF0000;
+    --cor-fundo-2: #1F1F1F;
 }
 
 body {
-    background-color: var(--cor-primaria);
     font-family: "Nunito Sans", sans-serif;;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: var(--cor-fundo-2);
+}
+
+.grid-points{
+    position: absolute;
+    top: -104px;
+    left: -71px;
+    z-index: 1;
+}
+
+.container-externo{
+    z-index: 2;
+    position: relative;
+    top: 5px;
+    left: 50px;
+    height: 537px;
+    width: 1156px;
+    background-color: white;
 }
 
 .container{
+    z-index: 3;
+    position: absolute;
+    background-color: var(--cor-primaria);
     display: flex;
     flex-direction: column;
     justify-content: start;
     align-items: center;
     height: 537px;
+    width: 1156px;
+    padding: 39px;
 }
 
 .logo-github{

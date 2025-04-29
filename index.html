@@ -23,6 +23,7 @@
 
 <body>
     <div class="container-externo">
+        <img class="grid-points" src="img/grid-points.svg" alt="grid-points">
         <div class="container">
             <img class="logo-github" src="img/logo-github.svg" alt="logo-github">
             <div class="input-com-icone">
@@ -32,25 +33,11 @@
                 </button>
             </div>
 
-            <div  id="perfil-container" class="perfil-container ocultar">
+            <div id="perfil-container" class="perfil-container ocultar">
                 <img id="perfil-img" src="" alt="img-perfil">
                 <div class="perfil-info">
                     <h2 id="perfil-nome" class="perfil-nome"></h2>
                     <p id="perfil-bio" class="perfil-bio">
-                    </p>
-                </div>
-            </div>
-
-            <div class="perfil-container ocultar">
-                <img src="img/relampago-mcqueen_capa.jpg" alt="img-perfil-avatar">
-                <div class="perfil-info">
-                    <h2 class="perfil-nome">Lucas Mendes</h2>
-                    <p class="perfil-bio">
-                        Desenvolvedor front-end apaixonado por criar interfaces intuitivas e acessíveis. Especialista em
-                        UX/UI e
-                        e-commerces, transformando design em código eficiente. Sempre explorando novas tecnologias para
-                        melhorar
-                        a experiência do usuário. 🚀
                     </p>
                 </div>
             </div>
@@ -61,6 +48,7 @@
             </div>
         </div>
     </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
@@ -76,6 +64,8 @@
             if (text) {
                 console.log(text)
                 buscarUsuario(text);
+            } else {
+                usuarioNaoEncontrado();
             }
         })
 
@@ -83,13 +73,8 @@
             try {
                 const resposta = await fetch(`https://api.github.com/users/${text}`)
                 if (!resposta.ok) {
-                    if(resposta.status === 404){
-                        //MANIPULAR PRA MOSTRAR NAO ENCONTRADO
-                        console.log("NOT FOUND")
-                        const notFound = document.getElementById("perfil-nao-encontrado");
-                        notFound.classList.remove("ocultar");
-                        const perfil_container = document.getElementById("perfil-container");
-                        perfil_container.classList.add("ocultar");
+                    if (resposta.status === 404) {
+                        usuarioNaoEncontrado();
                     }
                     throw new Error(`Erro na requisição: ${resposta.status}`)
                 }
@@ -99,6 +84,14 @@
                 console.log("Erro na busca: ", erro.message);
                 return erro;
             }
+        }
+
+        function usuarioNaoEncontrado() {
+            console.log("NOT FOUND")
+            const notFound = document.getElementById("perfil-nao-encontrado");
+            notFound.classList.remove("ocultar");
+            const perfil_container = document.getElementById("perfil-container");
+            perfil_container.classList.add("ocultar");
         }
 
         function mostrarUsuario(usuario) {
