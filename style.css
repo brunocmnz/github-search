@@ -1,7 +1,4 @@
-
-
-
-:root{
+:root {
     --cor-destaque: #005CFF;
     --cor-primaria: #000000;
     --cor-container-perfil: #d9d9d9;
@@ -10,22 +7,25 @@
 }
 
 body {
-    font-family: "Nunito Sans", sans-serif;;
+    font-family: "Nunito Sans", sans-serif;
     height: 100vh;
+    width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
     background-color: var(--cor-fundo-2);
+    position: absolute;
 }
 
-.grid-points{
+.grid-points {
     position: absolute;
     top: -104px;
     left: -71px;
     z-index: 1;
 }
 
-.container-externo{
+.container-externo {
     z-index: 2;
     position: relative;
     top: 5px;
@@ -35,7 +35,7 @@ body {
     background-color: white;
 }
 
-.container{
+.container {
     z-index: 3;
     position: absolute;
     background-color: var(--cor-primaria);
@@ -48,7 +48,7 @@ body {
     padding: 39px;
 }
 
-.logo-github{
+.logo-github {
     width: 384px;
 }
 
@@ -92,11 +92,11 @@ body {
 }
 
 .perfil-container,
-.perfil-nao-encontrado{
+.perfil-nao-encontrado {
     background-color: #D9D9D9;
 }
 
-.perfil-nao-encontrado{
+.perfil-nao-encontrado {
     padding: 17px 106px;
     border-radius: 10px;
     color: var(--cor-nao-encontrado);
@@ -104,7 +104,7 @@ body {
     text-align: center;
 }
 
-.perfil-container{
+.perfil-container {
     border-radius: 25px;
     padding: 19px 71px 18px 33px;
     display: flex;
@@ -113,29 +113,49 @@ body {
     width: 815px;
 }
 
-.perfil-container img{
+.perfil-container img {
     width: 220px;
     height: 220px;
     border-radius: 100%;
     border: solid 2px var(--cor-destaque);
 }
 
-.perfil-info{
+.perfil-info {
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
 
-.perfil-nome{
+.perfil-nome {
     color: var(--cor-destaque);
     font-size: 20px;
     font-weight: bold;
 }
 
-.perfil-bio{
+.perfil-bio {
     font-size: 15px;
 }
 
-.ocultar{
+.ocultar {
     display: none;
+}
+
+.bola-azul {
+    position: absolute;
+    width: 674px;
+    height: 674px;
+    background: radial-gradient(circle, rgba(0, 123, 255, 1) 0%,
+            rgba(0, 0, 0, 0) 40%, transparent 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+#bola-1{
+    top: 198px;
+    left: -415px;
+}
+
+#bola-2{
+    top: -396px;
+    right: -402px;
 }
